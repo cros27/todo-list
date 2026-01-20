@@ -79,3 +79,29 @@ li input {
   text-decoration: line-through;
   color: gray;
 }
+
+.dark-btn {
+  width: 100%;
+  margin-bottom: 10px;
+  background: #333;
+  color: #fff;
+  border: none;
+}
+
+body.dark {
+  background: #121212;
+}
+
+body.dark .container {
+  background: #1e1e1e;
+  color: #eee;
+}
+
+body.dark button {
+  background: #444;
+  color: #fff;
+}
+
+body.dark .filters button.active {
+  background: #4ea3ff;
+}

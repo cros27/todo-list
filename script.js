@@ -1,3 +1,23 @@
+const darkBtn = document.getElementById("darkModeBtn");
+
+// load mode
+if (localStorage.getItem("theme") === "dark") {
+  document.body.classList.add("dark");
+  darkBtn.textContent = "Light Mode";
+}
+
+darkBtn.addEventListener("click", () => {
+  document.body.classList.toggle("dark");
+
+  if (document.body.classList.contains("dark")) {
+    localStorage.setItem("theme", "dark");
+    darkBtn.textContent = "Light Mode";
+  } else {
+    localStorage.setItem("theme", "light");
+    darkBtn.textContent = "Dark Mode";
+  }
+});
+
 const input = document.getElementById("todoInput");
 const addBtn = document.getElementById("addBtn");
 const todoList = document.getElementById("todoList");
