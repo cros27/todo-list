@@ -18,7 +18,7 @@ A modern and clean Todo List web application built using Vanilla JavaScript.
 - GitHub Pages
 
 ## 🌍 Live Demo
-https://USERNAME.github.io/todo-list/
+https://cros27.github.io/todo-list/
 
 ## 📸 Preview
 ![Todo List Preview](preview.png)
