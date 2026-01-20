@@ -48,12 +48,24 @@ function renderTodos() {
       const editInput = document.createElement("input");
       editInput.value = todo.text;
 
-      editInput.addEventListener("blur", () => {
-        todo.text = editInput.value.trim() || todo.text;
-        todo.editing = false;
-        saveTodos();
-        renderTodos();
-      });
+      editInput.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    todo.text = editInput.value.trim() || todo.text;
+    todo.editing = false;
+    saveTodos();
+    renderTodos();
+  }
+
+  if (e.key === "Escape") {
+    todo.editing = false;
+    renderTodos();
+  }
+});
+
+editInput.addEventListener("blur", () => {
+  todo.editing = false;
+  renderTodos();
+});
 
       li.appendChild(editInput);
       editInput.focus();
@@ -97,6 +109,12 @@ addBtn.addEventListener("click", () => {
   saveTodos();
   renderTodos();
   input.value = "";
+});
+
+input.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    addBtn.click();
+  }
 });
 
 filterButtons.forEach(btn => {
