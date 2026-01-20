@@ -105,3 +105,57 @@ body.dark button {
 body.dark .filters button.active {
   background: #4ea3ff;
 }
+
+/* ==== UI POLISH ==== */
+
+/* container lebih modern */
+.container {
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease;
+}
+
+.container:hover {
+  transform: translateY(-2px);
+}
+
+/* input & button lebih smooth */
+input, button {
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+button {
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+button:hover {
+  transform: scale(1.03);
+}
+
+/* todo item jadi card kecil */
+li {
+  background: #f9f9f9;
+  padding: 8px 10px;
+  border-radius: 6px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+/* dark mode card */
+body.dark li {
+  background: #2a2a2a;
+}
+
+/* delete button lebih niat */
+li button {
+  background: #ff4d4d;
+  border: none;
+  color: white;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  font-weight: bold;
+}
+
+li button:hover {
+  background: #e63939;
+}
