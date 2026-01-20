@@ -11,12 +11,8 @@ function saveTodos() {
 }
 
 function getFilteredTodos() {
-  if (currentFilter === "active") {
-    return todos.filter(t => !t.done);
-  }
-  if (currentFilter === "done") {
-    return todos.filter(t => t.done);
-  }
+  if (currentFilter === "active") return todos.filter(t => !t.done);
+  if (currentFilter === "done") return todos.filter(t => t.done);
   return todos;
 }
 
@@ -27,35 +23,57 @@ function renderTodos() {
     const index = todos.indexOf(todo);
 
     const li = document.createElement("li");
-    li.textContent = todo.text;
 
-    if (todo.done) li.classList.add("done");
+    if (todo.editing) {
+      const editInput = document.createElement("input");
+      editInput.value = todo.text;
 
-    li.addEventListener("click", () => {
-      todos[index].done = !todos[index].done;
-      saveTodos();
-      renderTodos();
-    });
+      editInput.addEventListener("blur", () => {
+        todo.text = editInput.value.trim() || todo.text;
+        todo.editing = false;
+        saveTodos();
+        renderTodos();
+      });
 
-    const deleteBtn = document.createElement("button");
-    deleteBtn.textContent = "X";
-    deleteBtn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      todos.splice(index, 1);
-      saveTodos();
-      renderTodos();
-    });
+      li.appendChild(editInput);
+      editInput.focus();
+    } else {
+      const span = document.createElement("span");
+      span.textContent = todo.text;
+      if (todo.done) span.classList.add("done");
 
-    li.appendChild(deleteBtn);
+      span.addEventListener("click", () => {
+        todo.done = !todo.done;
+        saveTodos();
+        renderTodos();
+      });
+
+      span.addEventListener("dblclick", () => {
+        todo.editing = true;
+        renderTodos();
+      });
+
+      const deleteBtn = document.createElement("button");
+      deleteBtn.textContent = "X";
+      deleteBtn.addEventListener("click", () => {
+        todos.splice(index, 1);
+        saveTodos();
+        renderTodos();
+      });
+
+      li.appendChild(span);
+      li.appendChild(deleteBtn);
+    }
+
     todoList.appendChild(li);
   });
 }
 
 addBtn.addEventListener("click", () => {
   const text = input.value.trim();
-  if (text === "") return;
+  if (!text) return;
 
-  todos.push({ text, done: false });
+  todos.push({ text, done: false, editing: false });
   saveTodos();
   renderTodos();
   input.value = "";
@@ -64,10 +82,8 @@ addBtn.addEventListener("click", () => {
 filterButtons.forEach(btn => {
   btn.addEventListener("click", () => {
     currentFilter = btn.dataset.filter;
-
     filterButtons.forEach(b => b.classList.remove("active"));
     btn.classList.add("active");
-
     renderTodos();
   });
 });

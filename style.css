@@ -12,7 +12,7 @@ body {
 
 .container {
   background: #fff;
-  width: 320px;
+  width: 340px;
   padding: 20px;
   border-radius: 8px;
 }
@@ -61,8 +61,18 @@ ul {
 
 li {
   display: flex;
+  align-items: center;
   justify-content: space-between;
   margin-bottom: 8px;
+}
+
+li span {
+  flex: 1;
+  cursor: pointer;
+}
+
+li input {
+  flex: 1;
 }
 
 .done {
