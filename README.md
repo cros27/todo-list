@@ -1,29 +1,29 @@
 # 📝 Todo List App
 
-A simple Todo List web application built with HTML, CSS, and JavaScript.
+A modern and clean Todo List web application built using Vanilla JavaScript.
 
 ## 🚀 Features
-- Add new todo
+- Add & delete todo
 - Mark todo as done
-- Delete todo
+- Edit todo (double click)
 - Filter todo (All / Active / Done)
-- Data saved using localStorage
+- Dark Mode (saved automatically)
+- Keyboard shortcuts (Enter & Esc)
+- Data stored using localStorage
 
 ## 🛠 Tech Stack
-- HTML
-- CSS
+- HTML5
+- CSS3
 - JavaScript (Vanilla)
 - GitHub Pages
 
 ## 🌍 Live Demo
-https://cros27.github.io/todo-list/
+https://USERNAME.github.io/todo-list/
 
 ## 📸 Preview
-(Add screenshot here)
+![Todo List Preview](preview.png)
 
 ## 👤 Author
 **Muhammad Fharhan**  
-Frontend Developer (Junior)
-
-![Preview](screenshot<img width="1710" height="1112" alt="Tangkapan Layar 2026-01-20 pukul 19 36 59" src="https://github.com/user-attachments/assets/2fe4a51f-19de-4bb8-8607-02459fdbb728" />
-.png)
+Frontend Developer (Junior)  
+Computer Science Student
