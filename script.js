@@ -4,22 +4,36 @@ const todoList = document.getElementById("todoList");
 
 let todos = JSON.parse(localStorage.getItem("todos")) || [];
 
-// render todos
+function saveTodos() {
+  localStorage.setItem("todos", JSON.stringify(todos));
+}
+
 function renderTodos() {
   todoList.innerHTML = "";
 
   todos.forEach((todo, index) => {
     const li = document.createElement("li");
-    li.textContent = todo.text;
 
-    if (todo.done) {
-      li.classList.add("done");
-    }
+    const span = document.createElement("span");
+    span.textContent = todo.text;
+    if (todo.done) span.classList.add("done");
 
-    li.addEventListener("click", () => {
+    span.addEventListener("click", () => {
       todos[index].done = !todos[index].done;
       saveTodos();
       renderTodos();
+    });
+
+    const editBtn = document.createElement("button");
+    editBtn.textContent = "Edit";
+    editBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const newText = prompt("Edit todo:", todo.text);
+      if (newText !== null && newText.trim() !== "") {
+        todos[index].text = newText.trim();
+        saveTodos();
+        renderTodos();
+      }
     });
 
     const deleteBtn = document.createElement("button");
@@ -31,17 +45,13 @@ function renderTodos() {
       renderTodos();
     });
 
+    li.appendChild(span);
+    li.appendChild(editBtn);
     li.appendChild(deleteBtn);
     todoList.appendChild(li);
   });
 }
 
-// save todos
-function saveTodos() {
-  localStorage.setItem("todos", JSON.stringify(todos));
-}
-
-// add todo
 addBtn.addEventListener("click", () => {
   const text = input.value.trim();
   if (text === "") return;
