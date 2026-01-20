@@ -159,3 +159,20 @@ li button {
 li button:hover {
   background: #e63939;
 }
+
+/* ==== ANIMATION ==== */
+
+@keyframes fadeSlide {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+li {
+  animation: fadeSlide 0.35s cubic-bezier(.4,0,.2,1);
+}
