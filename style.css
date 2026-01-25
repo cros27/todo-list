@@ -1,178 +1,114 @@
+:root {
+  --bg: #ffffff;
+  --text: #111;
+  --muted: #777;
+  --border: #e5e5e5;
+}
+
+body.dark {
+  --bg: #0f0f0f;
+  --text: #f5f5f5;
+  --muted: #9a9a9a;
+  --border: #222;
+}
+
 * {
   box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
 }
 
 body {
-  font-family: Arial, sans-serif;
-  background: #f2f2f2;
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  transition: .3s;
+}
+
+header {
+  max-width: 680px;
+  margin: 40px auto;
   display: flex;
-  justify-content: center;
-  padding-top: 40px;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.container {
-  background: #fff;
-  width: 340px;
-  padding: 20px;
-  border-radius: 8px;
+header h1 {
+  font-size: 18px;
+  font-weight: 500;
 }
 
-h1 {
-  text-align: center;
-}
-
-.input-group {
-  display: flex;
-  gap: 5px;
-}
-
-input {
-  flex: 1;
-  padding: 6px;
-}
-
-button {
-  padding: 6px 10px;
+header button {
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+  padding: 6px 14px;
+  border-radius: 20px;
   cursor: pointer;
 }
 
-.filters {
-  display: flex;
-  gap: 5px;
-  margin-top: 10px;
+.container {
+  max-width: 680px;
+  margin: auto;
 }
 
-.filters button {
-  flex: 1;
-  background: #ddd;
+#todoInput {
+  width: 100%;
+  font-size: 36px;
   border: none;
-}
-
-.filters button.active {
-  background: #007bff;
-  color: #fff;
+  outline: none;
+  background: transparent;
+  color: var(--text);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 12px;
 }
 
 ul {
   list-style: none;
   padding: 0;
-  margin-top: 15px;
+  margin-top: 40px;
 }
 
 li {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  margin-bottom: 8px;
+  align-items: center;
+}
+
+li.done span {
+  text-decoration: line-through;
+  color: var(--muted);
 }
 
 li span {
-  flex: 1;
   cursor: pointer;
 }
 
-li input {
-  flex: 1;
-}
-
-.done {
-  text-decoration: line-through;
-  color: gray;
-}
-
-.dark-btn {
-  width: 100%;
-  margin-bottom: 10px;
-  background: #333;
-  color: #fff;
-  border: none;
-}
-
-body.dark {
-  background: #121212;
-}
-
-body.dark .container {
-  background: #1e1e1e;
-  color: #eee;
-}
-
-body.dark button {
-  background: #444;
-  color: #fff;
-}
-
-body.dark .filters button.active {
-  background: #4ea3ff;
-}
-
-/* ==== UI POLISH ==== */
-
-/* container lebih modern */
-.container {
-  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-  transition: transform 0.2s ease;
-}
-
-.container:hover {
-  transform: translateY(-2px);
-}
-
-/* input & button lebih smooth */
-input, button {
-  border-radius: 6px;
-  border: 1px solid #ccc;
-}
-
-button {
-  transition: background 0.2s ease, transform 0.1s ease;
-}
-
-button:hover {
-  transform: scale(1.03);
-}
-
-/* todo item jadi card kecil */
-li {
-  background: #f9f9f9;
-  padding: 8px 10px;
-  border-radius: 6px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-}
-
-/* dark mode card */
-body.dark li {
-  background: #2a2a2a;
-}
-
-/* delete button lebih niat */
 li button {
-  background: #ff4d4d;
+  background: none;
   border: none;
-  color: white;
-  border-radius: 50%;
-  width: 28px;
-  height: 28px;
-  font-weight: bold;
+  color: var(--muted);
+  cursor: pointer;
 }
 
-li button:hover {
-  background: #e63939;
+footer {
+  margin-top: 30px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: var(--muted);
 }
 
-/* ==== ANIMATION ==== */
-
-@keyframes fadeSlide {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.filters button {
+  border: none;
+  background: none;
+  color: var(--muted);
+  margin-left: 10px;
+  cursor: pointer;
 }
 
-li {
-  animation: fadeSlide 0.35s cubic-bezier(.4,0,.2,1);
+.filters button.active {
+  color: var(--text);
+  font-weight: 500;
 }

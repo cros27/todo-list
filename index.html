@@ -2,30 +2,37 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Todo List App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Todo List</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <div class="container">
-    <h1>Todo List</h1>
-    <button id="darkModeBtn" class="dark-btn">Dark Mode</button>
+<header>
+  <h1>Todo</h1>
+  <button id="themeToggle">Dark</button>
+</header>
 
-    <div class="input-group">
-      <input type="text" id="todoInput" placeholder="Tulis todo..." />
-      <button id="addBtn">Tambah</button>
-    </div>
+<main class="container">
+  <input
+    id="todoInput"
+    type="text"
+    placeholder="Tulis tugas lalu tekan Enter..."
+    autofocus
+  />
 
+  <ul id="todoList"></ul>
+
+  <footer>
+    <span id="counter">0 tasks</span>
     <div class="filters">
       <button data-filter="all" class="active">All</button>
       <button data-filter="active">Active</button>
       <button data-filter="done">Done</button>
     </div>
+  </footer>
+</main>
 
-    <ul id="todoList"></ul>
-  </div>
-
-  <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>

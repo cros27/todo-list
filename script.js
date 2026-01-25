@@ -1,129 +1,112 @@
-const darkBtn = document.getElementById("darkModeBtn");
-
-// load mode
-if (localStorage.getItem("theme") === "dark") {
-  document.body.classList.add("dark");
-  darkBtn.textContent = "Light Mode";
-}
-
-darkBtn.addEventListener("click", () => {
-  document.body.classList.toggle("dark");
-
-  if (document.body.classList.contains("dark")) {
-    localStorage.setItem("theme", "dark");
-    darkBtn.textContent = "Light Mode";
-  } else {
-    localStorage.setItem("theme", "light");
-    darkBtn.textContent = "Dark Mode";
-  }
-});
-
 const input = document.getElementById("todoInput");
-const addBtn = document.getElementById("addBtn");
-const todoList = document.getElementById("todoList");
-const filterButtons = document.querySelectorAll(".filters button");
+const list = document.getElementById("todoList");
+const toggle = document.getElementById("themeToggle");
+const counter = document.getElementById("counter");
+const filterBtns = document.querySelectorAll(".filters button");
 
-let todos = JSON.parse(localStorage.getItem("todos")) || [];
-let currentFilter = "all";
+const TODO_KEY = "todos";
+const THEME_KEY = "todo-theme";
 
-function saveTodos() {
-  localStorage.setItem("todos", JSON.stringify(todos));
+let todos = [];
+let filter = "all";
+
+/* ===== THEME ===== */
+if (localStorage.getItem(THEME_KEY) === "dark") {
+  document.body.classList.add("dark");
+  toggle.textContent = "Light";
 }
 
-function getFilteredTodos() {
-  if (currentFilter === "active") return todos.filter(t => !t.done);
-  if (currentFilter === "done") return todos.filter(t => t.done);
-  return todos;
-}
+toggle.onclick = () => {
+  const isDark = document.body.classList.toggle("dark");
+  toggle.textContent = isDark ? "Light" : "Dark";
+  localStorage.setItem(THEME_KEY, isDark ? "dark" : "light");
+};
 
-function renderTodos() {
-  todoList.innerHTML = "";
-
-  getFilteredTodos().forEach(todo => {
-    const index = todos.indexOf(todo);
-
-    const li = document.createElement("li");
-
-    if (todo.editing) {
-      const editInput = document.createElement("input");
-      editInput.value = todo.text;
-
-      editInput.addEventListener("keydown", (e) => {
-  if (e.key === "Enter") {
-    todo.text = editInput.value.trim() || todo.text;
-    todo.editing = false;
-    saveTodos();
-    renderTodos();
-  }
-
-  if (e.key === "Escape") {
-    todo.editing = false;
-    renderTodos();
+/* ===== LOAD ===== */
+document.addEventListener("DOMContentLoaded", () => {
+  const saved = localStorage.getItem(TODO_KEY);
+  if (saved) {
+    todos = JSON.parse(saved);
+    render();
   }
 });
 
-editInput.addEventListener("blur", () => {
-  todo.editing = false;
-  renderTodos();
+/* ===== ADD ===== */
+input.addEventListener("keydown", e => {
+  if (e.key === "Enter" && input.value.trim()) {
+    todos.push({ text: input.value.trim(), done: false });
+    input.value = "";
+    save();
+    render();
+  }
 });
 
-      li.appendChild(editInput);
-      editInput.focus();
-    } else {
+/* ===== FILTER ===== */
+filterBtns.forEach(btn => {
+  btn.onclick = () => {
+    filterBtns.forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    filter = btn.dataset.filter;
+    render();
+  };
+});
+
+/* ===== RENDER ===== */
+function render() {
+  list.innerHTML = "";
+
+  todos
+    .filter(t =>
+      filter === "all" ||
+      (filter === "active" && !t.done) ||
+      (filter === "done" && t.done)
+    )
+    .forEach(todo => {
+      const li = document.createElement("li");
+      li.draggable = true;
+
       const span = document.createElement("span");
       span.textContent = todo.text;
-      if (todo.done) span.classList.add("done");
 
-      span.addEventListener("click", () => {
+      if (todo.done) li.classList.add("done");
+
+      span.onclick = () => {
         todo.done = !todo.done;
-        saveTodos();
-        renderTodos();
-      });
+        save();
+        render();
+      };
 
-      span.addEventListener("dblclick", () => {
-        todo.editing = true;
-        renderTodos();
-      });
+      span.ondblclick = () => {
+        const inputEdit = document.createElement("input");
+        inputEdit.value = todo.text;
+        li.replaceChild(inputEdit, span);
+        inputEdit.focus();
 
-      const deleteBtn = document.createElement("button");
-      deleteBtn.textContent = "X";
-      deleteBtn.addEventListener("click", () => {
-        todos.splice(index, 1);
-        saveTodos();
-        renderTodos();
-      });
+        inputEdit.onkeydown = e => {
+          if (e.key === "Enter") {
+            todo.text = inputEdit.value;
+            save();
+            render();
+          }
+        };
+      };
 
-      li.appendChild(span);
-      li.appendChild(deleteBtn);
-    }
+      const del = document.createElement("button");
+      del.textContent = "✕";
+      del.onclick = () => {
+        todos = todos.filter(t => t !== todo);
+        save();
+        render();
+      };
 
-    todoList.appendChild(li);
-  });
+      li.append(span, del);
+      list.appendChild(li);
+    });
+
+  counter.textContent = `${todos.filter(t => !t.done).length} tasks left`;
 }
 
-addBtn.addEventListener("click", () => {
-  const text = input.value.trim();
-  if (!text) return;
-
-  todos.push({ text, done: false, editing: false });
-  saveTodos();
-  renderTodos();
-  input.value = "";
-});
-
-input.addEventListener("keydown", (e) => {
-  if (e.key === "Enter") {
-    addBtn.click();
-  }
-});
-
-filterButtons.forEach(btn => {
-  btn.addEventListener("click", () => {
-    currentFilter = btn.dataset.filter;
-    filterButtons.forEach(b => b.classList.remove("active"));
-    btn.classList.add("active");
-    renderTodos();
-  });
-});
-
-renderTodos();
+/* ===== SAVE ===== */
+function save() {
+  localStorage.setItem(TODO_KEY, JSON.stringify(todos));
+}
