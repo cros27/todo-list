@@ -14,7 +14,6 @@ let filter = "all";
 const themeToggle = document.getElementById("themeToggle");
 const THEME_KEY = "todo-theme";
 
-/* Load theme pas refresh */
 document.addEventListener("DOMContentLoaded", () => {
   const savedTheme = localStorage.getItem(THEME_KEY);
 
@@ -26,7 +25,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-/* Toggle theme */
 themeToggle.addEventListener("click", () => {
   const isDark = document.body.classList.toggle("dark");
 
