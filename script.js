@@ -55,6 +55,16 @@ filterBtns.forEach(btn => {
 function render() {
   list.innerHTML = "";
 
+  if (todos.length === 0) {
+  const empty = document.createElement("p");
+  empty.textContent = "No tasks yet. Add something meaningful.";
+  empty.style.color = "var(--muted)";
+  empty.style.marginTop = "40px";
+  list.appendChild(empty);
+  counter.textContent = "0 tasks";
+  return;
+}
+
   todos
     .filter(t =>
       filter === "all" ||
