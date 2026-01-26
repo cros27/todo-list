@@ -11,17 +11,33 @@ let todos = [];
 let filter = "all";
 
 /* ===== THEME ===== */
-if (localStorage.getItem(THEME_KEY) === "dark") {
-  document.body.classList.add("dark");
-  toggle.textContent = "Light";
-}
+const themeToggle = document.getElementById("themeToggle");
+const THEME_KEY = "portfolio-theme";
 
-toggle.onclick = () => {
+/* Load theme saat refresh */
+document.addEventListener("DOMContentLoaded", () => {
+  const savedTheme = localStorage.getItem(THEME_KEY);
+
+  if (savedTheme === "dark") {
+    document.body.classList.add("dark");
+    themeToggle.textContent = "LIGHT";
+  } else {
+    themeToggle.textContent = "DARK";
+  }
+});
+
+/* Toggle theme */
+themeToggle.addEventListener("click", () => {
   const isDark = document.body.classList.toggle("dark");
-  toggle.textContent = isDark ? "Light" : "Dark";
-  localStorage.setItem(THEME_KEY, isDark ? "dark" : "light");
-};
 
+  if (isDark) {
+    themeToggle.textContent = "LIGHT";
+    localStorage.setItem(THEME_KEY, "dark");
+  } else {
+    themeToggle.textContent = "DARK";
+    localStorage.setItem(THEME_KEY, "light");
+  }
+});
 /* ===== LOAD ===== */
 document.addEventListener("DOMContentLoaded", () => {
   const saved = localStorage.getItem(TODO_KEY);
