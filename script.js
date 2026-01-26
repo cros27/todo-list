@@ -94,10 +94,13 @@ function render() {
       const del = document.createElement("button");
       del.textContent = "✕";
       del.onclick = () => {
-        todos = todos.filter(t => t !== todo);
-        save();
-        render();
-      };
+  li.classList.add("removing");
+  setTimeout(() => {
+    todos = todos.filter(t => t !== todo);
+    save();
+    render();
+  }, 200);
+};
 
       li.append(span, del);
       list.appendChild(li);
