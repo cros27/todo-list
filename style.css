@@ -146,6 +146,14 @@ li button:hover {
   color: var(--text);
 }
 
+body {
+  transition: background-color .25s ease, color .25s ease;
+}
+
+header, li, footer {
+  transition: background-color .25s ease, color .25s ease, border-color .25s ease;
+}
+
 #todoInput:focus {
   border-bottom-color: var(--text);
 }
