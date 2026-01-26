@@ -12,9 +12,9 @@ let filter = "all";
 
 /* ===== THEME ===== */
 const themeToggle = document.getElementById("themeToggle");
-const THEME_KEY = "portfolio-theme";
+const THEME_KEY = "todo-theme";
 
-/* Load theme saat refresh */
+/* Load theme pas refresh */
 document.addEventListener("DOMContentLoaded", () => {
   const savedTheme = localStorage.getItem(THEME_KEY);
 
@@ -38,6 +38,7 @@ themeToggle.addEventListener("click", () => {
     localStorage.setItem(THEME_KEY, "light");
   }
 });
+
 /* ===== LOAD ===== */
 document.addEventListener("DOMContentLoaded", () => {
   const saved = localStorage.getItem(TODO_KEY);
