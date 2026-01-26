@@ -133,3 +133,19 @@ li.removing {
     transform: translateY(0);
   }
 }
+
+li:hover {
+  background: rgba(0,0,0,0.02);
+}
+
+body.dark li:hover {
+  background: rgba(255,255,255,0.03);
+}
+
+li button:hover {
+  color: var(--text);
+}
+
+#todoInput:focus {
+  border-bottom-color: var(--text);
+}
