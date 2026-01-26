@@ -11,31 +11,16 @@ let todos = [];
 let filter = "all";
 
 /* ===== THEME ===== */
-const themeToggle = document.getElementById("themeToggle");
-const THEME_KEY = "todo-theme";
+if (localStorage.getItem(THEME_KEY) === "dark") {
+  document.body.classList.add("dark");
+  toggle.textContent = "Light";
+}
 
-document.addEventListener("DOMContentLoaded", () => {
-  const savedTheme = localStorage.getItem(THEME_KEY);
-
-  if (savedTheme === "dark") {
-    document.body.classList.add("dark");
-    themeToggle.textContent = "LIGHT";
-  } else {
-    themeToggle.textContent = "DARK";
-  }
-});
-
-themeToggle.addEventListener("click", () => {
+toggle.onclick = () => {
   const isDark = document.body.classList.toggle("dark");
-
-  if (isDark) {
-    themeToggle.textContent = "LIGHT";
-    localStorage.setItem(THEME_KEY, "dark");
-  } else {
-    themeToggle.textContent = "DARK";
-    localStorage.setItem(THEME_KEY, "light");
-  }
-});
+  toggle.textContent = isDark ? "Light" : "Dark";
+  localStorage.setItem(THEME_KEY, isDark ? "dark" : "light");
+};
 
 /* ===== LOAD ===== */
 document.addEventListener("DOMContentLoaded", () => {

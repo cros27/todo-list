@@ -108,6 +108,7 @@ footer {
   cursor: pointer;
 }
 
-#themeToggle {
-  text-transform: uppercase;
+.filters button.active {
+  color: var(--text);
+  font-weight: 500;
 }
