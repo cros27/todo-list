@@ -66,14 +66,23 @@ function render() {
 }
 
   todos
-    .filter(t =>
-      filter === "all" ||
-      (filter === "active" && !t.done) ||
-      (filter === "done" && t.done)
-    )
-    .forEach(todo => {
+  .filter(t =>
+    filter === "all" ||
+    (filter === "active" && !t.done) ||
+    (filter === "done" && t.done)
+  )
+  .forEach((todo, index) => {
       const li = document.createElement("li");
       li.draggable = true;
+      li.addEventListener("dragstart", () => {
+  li.classList.add("dragging");
+  li.dataset.index = index;
+});
+
+li.addEventListener("dragend", () => {
+  li.classList.remove("dragging");
+  save();
+});
 
       const span = document.createElement("span");
       span.textContent = todo.text;
@@ -119,7 +128,55 @@ function render() {
   counter.textContent = `${todos.filter(t => !t.done).length} tasks left`;
 }
 
+document.addEventListener("keydown", e => {
+  // Ctrl + N → fokus input
+  if (e.ctrlKey && e.key.toLowerCase() === "n") {
+    e.preventDefault();
+    input.focus();
+  }
+
+  // Ctrl + D → hapus semua done
+  if (e.ctrlKey && e.key.toLowerCase() === "d") {
+    e.preventDefault();
+    todos = todos.filter(t => !t.done);
+    save();
+    render();
+  }
+
+  // Esc → batal edit
+  if (e.key === "Escape") {
+    render();
+  }
+});
+
 /* ===== SAVE ===== */
 function save() {
   localStorage.setItem(TODO_KEY, JSON.stringify(todos));
 }
+
+list.addEventListener("dragover", e => {
+  e.preventDefault();
+
+  const dragging = document.querySelector(".dragging");
+  if (!dragging) return;
+
+  const siblings = [...list.querySelectorAll("li:not(.dragging)")];
+
+  const next = siblings.find(li =>
+    e.clientY <= li.offsetTop + li.offsetHeight / 2
+  );
+
+  if (next) {
+    list.insertBefore(dragging, next);
+  } else {
+    list.appendChild(dragging);
+  }
+
+  // update order di array
+  todos = [...list.children].map(li => {
+    const text = li.querySelector("span").textContent;
+    return todos.find(t => t.text === text);
+  });
+
+  save();
+});
